@@ -347,6 +347,21 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" title="Pagos con Visa" />
   </div>
 </footer>
+  
+<footer>
+  Contacto: <a href="mailto:ventas@tiendaonline.com">ventas@tiendaonline.com</a>
+  <br>
+  Síguenos en
+  <a href="https://instagram.com/tiendaonline" target="_blank" rel="noopener noreferrer">
+    <img src="instagram.svg" alt="Instagram" />
+  </a>
+  <a href="https://facebook.com/tiendaonline" target="_blank" rel="noopener noreferrer">
+    <img src="facebook.svg" alt="Facebook" />
+  </a>
+  <a href="https://twitter.com/tiendaonline" target="_blank" rel="noopener noreferrer">
+    <img src="twitter.svg" alt="Twitter" />
+  </a>
+</footer>
 
 <!-- Botón y caja de chat -->
 <button id="chat-toggle" title="Abrir chat">💬</button>
@@ -435,6 +450,94 @@
 
 </body>
 <script>
+  // Testimonios
+  const testimonialForm = document.getElementById('testimonial-form');
+  const testimonialList = document.getElementById('testimonial-list');
+
+  function escapeHTML(text) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+  }
+
+  function loadTestimonials() {
+    const stored = localStorage.getItem('testimonials');
+    if (stored) {
+      const arr = JSON.parse(stored);
+      testimonialList.innerHTML = '';
+      arr.forEach(t => {
+        const div = document.createElement('div');
+        div.classList.add('testimonial');
+        div.innerHTML = '<p>"' + escapeHTML(t.text) + '"</p><span>– ' + escapeHTML(t.name) + '</span>';
+        testimonialList.appendChild(div);
+      });
+    } else {
+      testimonialList.innerHTML = '<p style="text-align:center; color:#777;">No hay opiniones aún. ¡Sé el primero!</p>';
+    }
+  }
+
+  function saveTestimonials(arr) {
+    localStorage.setItem('testimonials', JSON.stringify(arr));
+  }
+
+  testimonialForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = testimonialForm.querySelector('#comment').value.trim();
+    const name = testimonialForm.querySelector('#name').value.trim();
+    if (!text || !name) return alert('Por favor, completa ambos campos.');
+    let arr = localStorage.getItem('testimonials');
+    arr = arr ? JSON.parse(arr) : [];
+    arr.unshift({ name, text });
+    if (arr.length > 20) arr.pop();
+    saveTestimonials(arr);
+    testimonialForm.reset();
+    loadTestimonials();
+  });
+
+  loadTestimonials();
+
+  // Chat básico
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatBox = document.getElementById('chat-box');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatForm = document.getElementById('chat-form');
+
+  chatToggle.addEventListener('click', () => {
+    chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+    if (chatBox.style.display === 'flex') chatInput.focus();
+  });
+
+  chatForm.addEventListener('submit', e => {
+    e.preventDefault();
+    sendMessage();
+  });
+
+  chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+    appendMessage('Tú', msg);
+    chatInput.value = '';
+    setTimeout(() => {
+      appendMessage('Soporte', 'Gracias por tu mensaje. Te responderemos pronto.');
+    }, 1000);
+  }
+
+  function appendMessage(who, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Temporizador oferta 48h guardado en localStorage
   const ahora = new Date().getTime();
   let finOferta = localStorage.getItem("finOferta48h");
   if (!finOferta) {
@@ -450,17 +553,16 @@
 
     if (diferencia <= 0) {
       clearInterval(intervalo);
-      document.getElementById("oferta-timer").innerHTML = "⏰ La oferta ha terminado.";
+      document.getElementById("cuenta-regresiva").textContent = "⏰ La oferta ha terminado.";
     } else {
       const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
       document.getElementById("cuenta-regresiva").textContent =
-        ${horas}h ${minutos}m ${segundos}s;
+        `${horas}h ${minutos}m ${segundos}s`;
     }
   }, 1000);
-</script>
-<script>
+
   // Sistema de estrellas y stock dinámico
   document.querySelectorAll('.stars').forEach(starEl => {
     const rating = parseInt(starEl.dataset.rating, 10);
@@ -476,21 +578,19 @@
     const textEl = stockEl.querySelector('.stock-text');
     if (stock <= 3) {
       stockEl.classList.add('low');
-      textEl.textContent = ¡Quedan solo ${stock} en stock! 🚨;
+      textEl.textContent = `¡Quedan solo ${stock} en stock! 🚨`;
     } else {
-      textEl.textContent = Disponibles: ${stock} unidades;
+      textEl.textContent = `Disponibles: ${stock} unidades`;
     }
   });
-</script>
-<script>
+
   // Calcular y mostrar el descuento del 20%
   document.querySelectorAll('.precio').forEach(div => {
     const precioConDescuento = parseFloat(div.dataset.precioDescuento);
     const precioOriginal = (precioConDescuento / 0.8).toFixed(2);
     div.innerHTML = 
-      <span class="precio-original">$${precioOriginal}</span>
-      <span class="precio-descuento">$${precioConDescuento.toFixed(2)}</span>
-    ;
+      `<span class="precio-original">$${precioOriginal}</span>
+       <span class="precio-descuento">$${precioConDescuento.toFixed(2)}</span>`;
   });
 
   // Cambiar texto del botón de compra para mostrar que hay oferta
