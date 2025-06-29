@@ -4,206 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tienda - CleanSwipe™ & Mini Proyector</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f6fc;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background:#1d3557; 
-      color:#fff; 
-      padding:15px; 
-      position:sticky; 
-      top:0; 
-      z-index:999; 
-      text-align:center; 
-      font-size:22px; 
-      font-weight:bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-      padding-top: 30px;
-    }
-    h1 {
-      text-align: center;
-      color: #1d3557;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
-    .product-card {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    .product-card img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    .buy-button, .add-to-cart {
-      display: inline-block;
-      background-color: #457b9d;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-    .buy-button:hover, .add-to-cart:hover {
-      background-color: #365f7a;
-    }
-    #cart-icon {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
-      z-index: 9999;
-    }
-    #cart-count {
-      background: red;
-      color: #fff;
-      border-radius: 50%;
-      padding: 2px 6px;
-      font-size: 12px;
-      position: absolute;
-      top: -5px;
-      right: -5px;
-    }
-    #cart-container {
-      display: none;
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      width: 320px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      z-index: 9999;
-      padding: 15px;
-    }
-    #cart-items div {
-      margin-bottom: 10px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 5px;
-    }
-    .quantity-controls button {
-      padding: 2px 6px;
-      margin: 0 4px;
-    }
-    .remove-btn {
-      background: none;
-      border: none;
-      color: red;
-      cursor: pointer;
-    }
-    .checkout-btn {
-      background: green;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .checkout-btn:hover {
-      background: darkgreen;
-    }
-  </style>
-</head>
-<body>
-
-<div id="cart-icon">
-  <i class="fa fa-shopping-cart"></i>
-  <span id="cart-count">0</span>
-</div>
-<div id="cart-container">
-  <h3>🛒 Tu Carrito</h3>
-  <div id="cart-items"></div>
-  <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
-  <button class="checkout-btn">Finalizar compra</button>
-</div>
-
-<script>
-  const cart = JSON.parse(localStorage.getItem("cart")) || {};
-  const cartCount = document.getElementById("cart-count");
-  const cartIcon = document.getElementById("cart-icon");
-  const cartContainer = document.getElementById("cart-container");
-  const cartItems = document.getElementById("cart-items");
-  const cartTotal = document.getElementById("cart-total");
-
-  function updateCartDisplay() {
-    cartItems.innerHTML = "";
-    let total = 0;
-    let count = 0;
-    for (const id in cart) {
-      const item = cart[id];
-      total += item.price * item.qty;
-      count += item.qty;
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <strong>${item.name}</strong><br>
-        <span>$${item.price.toFixed(2)} x ${item.qty}</span>
-        <div class="quantity-controls">
-          <button onclick="changeQty('${id}', -1)">-</button>
-          <button onclick="changeQty('${id}', 1)">+</button>
-          <button class="remove-btn" onclick="removeFromCart('${id}')">✖</button>
-        </div>
-      `;
-      cartItems.appendChild(div);
-    }
-    cartCount.textContent = count;
-    cartTotal.textContent = total.toFixed(2);
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
-  function addToCart(id, name, price) {
-    if (cart[id]) {
-      cart[id].qty++;
-    } else {
-      cart[id] = { name, price, qty: 1 };
-    }
-    updateCartDisplay();
-  }
-  function changeQty(id, delta) {
-    cart[id].qty += delta;
-    if (cart[id].qty <= 0) delete cart[id];
-    updateCartDisplay();
-  }
-  function removeFromCart(id) {
-    delete cart[id];
-    updateCartDisplay();
-  }
-  cartIcon.onclick = () => {
-    cartContainer.style.display = cartContainer.style.display === "block" ? "none" : "block";
-  };
-  updateCartDisplay();
-</script>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -443,8 +243,12 @@
   Tienda Online - Confianza y Calidad
 </header>
 
+<div id="oferta-timer" style="background:#e63946; color:white; text-align:center; padding:12px; font-size:18px; font-weight:bold;">
+  🕒 ¡Oferta especial disponible por tiempo limitado! Termina en <span id="cuenta-regresiva"></span>
+</div>
+
 <div class="container">
-  <h1>🛍️ Nuestra tienda</h1>
+  <h1>🍭 Nuestra tienda</h1>
 
   <div class="product-grid">
     <div class="product-card">
@@ -580,207 +384,38 @@
   }
   function appendMessage(who, text) {
     const msgDiv = document.createElement('div');
-    msgDiv.innerHTML = <strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)};
+    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f6fc;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background:#1d3557; 
-      color:#fff; 
-      padding:15px; 
-      position:sticky; 
-      top:0; 
-      z-index:999; 
-      text-align:center; 
-      font-size:22px; 
-      font-weight:bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-    #cart-button {
-      position: absolute;
-      right: 20px;
-      top: 15px;
-      background: #fff;
-      color: #1d3557;
-      border: none;
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #cart-button:hover {
-      background: #e0e0e0;
-    }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-      padding-top: 30px;
-    }
-    h1 {
-      text-align: center;
-      color: #1d3557;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
-    .product-card {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    .product-card img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-    .buy-button {
-      display: inline-block;
-      background-color: #457b9d;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-    .buy-button:hover {
-      background-color: #365f7a;
-    }
-    #cart-modal {
-      display:none;
-      position:fixed;
-      top:80px;
-      right:20px;
-      background:white;
-      border-radius:12px;
-      padding:20px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.3);
-      z-index:1001;
-      width:300px;
-    }
-    footer {
-      background:#f1f1f1; 
-      padding:20px; 
-      margin-top:50px; 
-      text-align:center; 
-      font-size:14px; 
-      color:#555;
-      border-top: 1px solid #ccc;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  Tienda Online - Confianza y Calidad
-  <button id="cart-button" title="Ver carrito">🛒 <span id="cart-count">0</span></button>
-</header>
-
-<div class="container">
-  <h1>🛍️ Nuestra tienda</h1>
-
-  <div class="product-grid">
-    <div class="product-card">
-      <img src="cleanswipe.png" alt="CleanSwipe™" />
-      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
-      <p>🧽 Limpiador 2 en 1 con spray y paño integrado.<br>✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br>📦 Envío gratuito<br>💰 Reembolso garantizado</p>
-      <a class="buy-button" href="#" onclick="addToCart('CleanSwipe™', 8.99)">Agregar al carrito</a>
-    </div>
-    <div class="product-card">
-      <img src="mini-proyector.jpg" alt="Mini Proyector" />
-      <h2>✨ Mini Proyector portátil LED</h2>
-      <p>🎥 Cine portátil HD para casa y oficina.<br>✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br>📦 Envío rápido<br>💰 Garantía de satisfacción</p>
-      <a class="buy-button" href="#" onclick="addToCart('Mini Proyector', 29.99)">Agregar al carrito</a>
-    </div>
-  </div>
-</div>
-
-<div id="cart-modal">
-  <h3>🛒 Tu Carrito</h3>
-  <div id="cart-items"></div>
-  <p>Total: $<span id="cart-total">0.00</span></p>
-  <button onclick="checkoutCart()">Finalizar compra</button>
-</div>
-
-<footer>
-  <p>© 2025 Tienda Online. Todos los derechos reservados.</p>
-</footer>
-
-<script>
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-  function updateCartCount() {
-    document.getElementById('cart-count').textContent = cart.reduce((acc, item) => acc + item.qty, 0);
-  }
-
-  function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-  }
-
-  function addToCart(product, price) {
-    const existing = cart.find(p => p.name === product);
-    if (existing) {
-      existing.qty += 1;
-    } else {
-      cart.push({ name: product, price, qty: 1 });
-    }
-    saveCart();
-    showCart();
-  }
-
-  function showCart() {
-    const cartItemsDiv = document.getElementById('cart-items');
-    cartItemsDiv.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-      total += item.price * item.qty;
-      cartItemsDiv.innerHTML += `<p>${item.name} x ${item.qty} = $${(item.price * item.qty).toFixed(2)}</p>`;
-    });
-    document.getElementById('cart-total').textContent = total.toFixed(2);
-    document.getElementById('cart-modal').style.display = 'block';
-  }
-
-  function checkoutCart() {
-    alert('Gracias por tu compra. Te contactaremos por WhatsApp para finalizar el pedido.');
-    cart = [];
-    saveCart();
-    document.getElementById('cart-modal').style.display = 'none';
-  }
-
-  document.getElementById('cart-button').addEventListener('click', () => {
-    document.getElementById('cart-modal').style.display =
-      document.getElementById('cart-modal').style.display === 'block' ? 'none' : 'block';
-  });
-
-  updateCartCount();
 </script>
 
 </body>
-</html>
+<script>
+  const ahora = new Date().getTime();
+  let finOferta = localStorage.getItem("finOferta48h");
+  if (!finOferta) {
+    finOferta = ahora + 48 * 60 * 60 * 1000;
+    localStorage.setItem("finOferta48h", finOferta);
+  } else {
+    finOferta = parseInt(finOferta, 10);
+  }
 
+  const intervalo = setInterval(function () {
+    const ahora = new Date().getTime();
+    const diferencia = finOferta - ahora;
+
+    if (diferencia <= 0) {
+      clearInterval(intervalo);
+      document.getElementById("oferta-timer").innerHTML = "⏰ La oferta ha terminado.";
+    } else {
+      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+      document.getElementById("cuenta-regresiva").textContent =
+        `${horas}h ${minutos}m ${segundos}s`;
+    }
+  }, 1000);
 </script>
 
 </body>
