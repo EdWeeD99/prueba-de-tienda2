@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background:#1d3557; 
+      color:#fff; 
+      padding:15px; 
+      position:sticky; 
+      top:0; 
+      z-index:999; 
+      text-align:center; 
+      font-size:22px; 
+      font-weight:bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+      padding-top: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #1d3557;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .product-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .buy-button {
+      display: inline-block;
+      background-color: #457b9d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    .buy-button:hover {
+      background-color: #365f7a;
+    }
+    .about {
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid #ccc;
+    }
+    .about h2 {
+      color: #1d3557;
+    }
+    .about p {
+      color: #333;
+    }
+    .whatsapp-button {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: #25d366;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    /* Testimonios */
+    #testimonials-section {
+      margin-top: 50px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    #testimonials-section h2 {
+      color: #1d3557;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    #testimonial-list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .testimonial {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+      font-style: italic;
+      color: #444;
+    }
+    .testimonial span {
+      display: block;
+      text-align: right;
+      font-weight: bold;
+      margin-top: 5px;
+      color: #1d3557;
+    }
+    #testimonial-form {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #testimonial-form input,
+    #testimonial-form textarea {
+      width: 90%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      resize: vertical;
+    }
+    #testimonial-form button {
+      background-color: #457b9d;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #testimonial-form button:hover {
+      background-color: #365f7a;
+    }
+    footer {
+      background:#f1f1f1; 
+      padding:20px; 
+      margin-top:50px; 
+      text-align:center; 
+      font-size:14px; 
+      color:#555;
+      border-top: 1px solid #ccc;
+    }
+    footer img {
+      vertical-align: middle;
+      margin: 0 10px;
+      width: 32px;
+      height: 32px;
+    }
+    #chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+    #chat-box {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      flex-direction: column;
+      font-size: 14px;
+      z-index: 1000;
+    }
+    #chat-box[style*="flex"] {
+      display: flex;
+    }
+    #chat-header {
+      background: #457b9d;
+      color: white;
+      padding: 10px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #chat-messages {
+      padding: 10px;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 5px;
+      gap: 5px;
+    }
+    #chat-input input {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    #chat-input button {
+      background: #457b9d;
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    #chat-input button:hover {
+      background: #365f7a;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Tienda Online - Confianza y Calidad
+  <span style="position: absolute; right: 20px; top: 15px; font-size: 18px; cursor: pointer;" onclick="toggleCart()">
+    🛒 <span id="cart-count" style="background:#e63946; color:white; border-radius:50%; padding:2px 8px; font-size:14px;">0</span>
+  </span>
+</header>
+
+<div id="cart-box" style="display:none; position:fixed; top:80px; right:20px; width:300px; background:white; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:999; padding:15px; font-size:14px;">
+  <h3 style="margin-top:0; color:#1d3557;">🛒 Tu Carrito</h3>
+  <ul id="cart-items" style="list-style:none; padding:0; margin:0 0 10px 0;"></ul>
+  <p>Total: $<span id="cart-total">0.00</span></p>
+  <button onclick="checkout()" style="width:100%; padding:10px; background:#457b9d; color:white; border:none; border-radius:8px; cursor:pointer;">Finalizar compra</button>
+</div>
+
+<!-- El resto del HTML y JS queda sin modificar -->
+<script>
+// Carrito simple
+let cart = [];
+
+function addToCart(productName, price) {
+  cart.push({ name: productName, price: price });
+  updateCart();
+}
+
+function updateCart() {
+  const cartItems = document.getElementById("cart-items");
+  const cartCount = document.getElementById("cart-count");
+  const cartTotal = document.getElementById("cart-total");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    const li = document.createElement("li");
+    li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeItem(${index})" style="float:right; background:none; border:none; color:red; cursor:pointer;">✖</button>`;
+    cartItems.appendChild(li);
+  });
+
+  cartCount.textContent = cart.length;
+  cartTotal.textContent = total.toFixed(2);
+}
+
+function toggleCart() {
+  const box = document.getElementById("cart-box");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  let summary = cart.map(item => `${item.name} - $${item.price.toFixed(2)}`).join("\n");
+  alert("Resumen de compra:\n" + summary + "\n\nTotal: $" + cart.reduce((sum, item) => sum + item.price, 0).toFixed(2) + "\n\nDirigiéndote a la pasarela de pago...");
+
+  // Redirigir a tu pasarela de pago principal (ejemplo: CleanSwipe)
+  window.open("https://payhip.com/b/UKlkB", "_blank");
+}
+</script>
+</body>
+</html>
