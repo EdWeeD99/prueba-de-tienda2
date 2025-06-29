@@ -34,11 +34,11 @@
       color: #1d3557;
     }
     .product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
     .product-card {
       background-color: #fff;
       border-radius: 12px;
@@ -271,12 +271,7 @@
   width: 100%;
   clear: both;
 }
-#testimonial-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center; /* ✅ esta línea centra horizontalmente */
-}
+
   </style>
 </head>
 <body>
@@ -321,8 +316,9 @@
 <div class="stock" data-stock="7"><span class="stock-text"></span></div>
   <div class="precio" data-precio-descuento="29.99"></div>
   <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar</a>
-</div>  
- <div class="about">
+</div>   
+ 
+  <!-- SECCIÓN DE TESTIMONIOS -->
 <section id="testimonials-section">
   <h2>Opiniones de nuestros clientes</h2>
   <div id="testimonial-list"></div>
@@ -333,9 +329,9 @@
     <br />
     <button type="submit">Enviar opinión</button>
   </form>
-</section> 
-</div>
-</div>
+</section>
+
+
   <div class="about">
     <h2>¿Quiénes somos?</h2>
     <p>Somos una tienda online que ofrece productos prácticos y garantizados.</p>
@@ -434,7 +430,7 @@
   }
   function appendMessage(who, text) {
     const msgDiv = document.createElement('div');
-    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
+    msgDiv.innerHTML = <strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)};
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
@@ -463,7 +459,7 @@
       const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
       document.getElementById("cuenta-regresiva").textContent =
-        `${horas}h ${minutos}m ${segundos}s`;
+        ${horas}h ${minutos}m ${segundos}s;
     }
   }, 1000);
 </script>
@@ -483,9 +479,9 @@
     const textEl = stockEl.querySelector('.stock-text');
     if (stock <= 3) {
       stockEl.classList.add('low');
-      textEl.textContent = `¡Quedan solo ${stock} en stock! 🚨`;
+      textEl.textContent = ¡Quedan solo ${stock} en stock! 🚨;
     } else {
-      textEl.textContent = `Disponibles: ${stock} unidades`;
+      textEl.textContent = Disponibles: ${stock} unidades;
     }
   });
 </script>
@@ -494,10 +490,10 @@
   document.querySelectorAll('.precio').forEach(div => {
     const precioConDescuento = parseFloat(div.dataset.precioDescuento);
     const precioOriginal = (precioConDescuento / 0.8).toFixed(2);
-    div.innerHTML = `
+    div.innerHTML = 
       <span class="precio-original">$${precioOriginal}</span>
       <span class="precio-descuento">$${precioConDescuento.toFixed(2)}</span>
-    `;
+    ;
   });
 
   // Cambiar texto del botón de compra para mostrar que hay oferta
