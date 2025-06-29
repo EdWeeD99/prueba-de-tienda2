@@ -235,6 +235,20 @@
     #chat-input button:hover {
       background: #365f7a;
     }
+      .stars {
+  font-size: 20px;
+  color: gold;
+  margin: 5px 0;
+}
+.stock {
+  font-size: 14px;
+  color: #1d3557;
+  font-weight: bold;
+}
+.stock.low {
+  color: #e63946;
+}
+
   </style>
 </head>
 <body>
@@ -259,7 +273,11 @@
         ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
         📦 Envío gratuito<br>💰 Reembolso garantizado
       </p>
-      <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+      <div class="stars" data-rating="4">★★★★☆</div>
+<div class="stock" data-stock="7"><span class="stock-text"></span></div>
+
+<a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+     
     </div>
 
     <div class="product-card">
@@ -270,6 +288,9 @@
         ✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br><br>
         📦 Envío rápido<br>💰 Garantía de satisfacción
       </p>
+        
+<div class="stars" data-rating="4">★★★★☆</div>
+<div class="stock" data-stock="7"><span class="stock-text"></span></div>
       <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
     </div>
   </div>
@@ -416,6 +437,28 @@
         `${horas}h ${minutos}m ${segundos}s`;
     }
   }, 1000);
+</script>
+<script>
+  // Sistema de estrellas y stock dinámico
+  document.querySelectorAll('.stars').forEach(starEl => {
+    const rating = parseInt(starEl.dataset.rating, 10);
+    let starsHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      starsHTML += i <= rating ? '★' : '☆';
+    }
+    starEl.textContent = starsHTML;
+  });
+
+  document.querySelectorAll('.stock').forEach(stockEl => {
+    const stock = parseInt(stockEl.dataset.stock, 10);
+    const textEl = stockEl.querySelector('.stock-text');
+    if (stock <= 3) {
+      stockEl.classList.add('low');
+      textEl.textContent = `¡Quedan solo ${stock} en stock! 🚨`;
+    } else {
+      textEl.textContent = `Disponibles: ${stock} unidades`;
+    }
+  });
 </script>
 
 </body>
