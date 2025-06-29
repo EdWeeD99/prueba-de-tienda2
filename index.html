@@ -102,13 +102,19 @@
       margin-bottom: 15px;
     }
     #testimonial-list {
-      max-height: 200px;
-      overflow-y: auto;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: #f9f9f9;
-    }
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;        
+  box-sizing: border-box; 
+}
+
     .testimonial {
       border-bottom: 1px solid #ccc;
       padding: 10px 0;
@@ -261,6 +267,10 @@
   color: #e63946;
   font-weight: bold;
 }
+    body {
+  overflow-x: hidden;
+}
+
   </style>
 </head>
 <body>
