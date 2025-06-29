@@ -584,6 +584,203 @@
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background:#1d3557; 
+      color:#fff; 
+      padding:15px; 
+      position:sticky; 
+      top:0; 
+      z-index:999; 
+      text-align:center; 
+      font-size:22px; 
+      font-weight:bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    #cart-button {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      background: #fff;
+      color: #1d3557;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #cart-button:hover {
+      background: #e0e0e0;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+      padding-top: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #1d3557;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .product-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .buy-button {
+      display: inline-block;
+      background-color: #457b9d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    .buy-button:hover {
+      background-color: #365f7a;
+    }
+    #cart-modal {
+      display:none;
+      position:fixed;
+      top:80px;
+      right:20px;
+      background:white;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+      z-index:1001;
+      width:300px;
+    }
+    footer {
+      background:#f1f1f1; 
+      padding:20px; 
+      margin-top:50px; 
+      text-align:center; 
+      font-size:14px; 
+      color:#555;
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Tienda Online - Confianza y Calidad
+  <button id="cart-button" title="Ver carrito">🛒 <span id="cart-count">0</span></button>
+</header>
+
+<div class="container">
+  <h1>🛍️ Nuestra tienda</h1>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="cleanswipe.png" alt="CleanSwipe™" />
+      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
+      <p>🧽 Limpiador 2 en 1 con spray y paño integrado.<br>✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br>📦 Envío gratuito<br>💰 Reembolso garantizado</p>
+      <a class="buy-button" href="#" onclick="addToCart('CleanSwipe™', 8.99)">Agregar al carrito</a>
+    </div>
+    <div class="product-card">
+      <img src="mini-proyector.jpg" alt="Mini Proyector" />
+      <h2>✨ Mini Proyector portátil LED</h2>
+      <p>🎥 Cine portátil HD para casa y oficina.<br>✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br>📦 Envío rápido<br>💰 Garantía de satisfacción</p>
+      <a class="buy-button" href="#" onclick="addToCart('Mini Proyector', 29.99)">Agregar al carrito</a>
+    </div>
+  </div>
+</div>
+
+<div id="cart-modal">
+  <h3>🛒 Tu Carrito</h3>
+  <div id="cart-items"></div>
+  <p>Total: $<span id="cart-total">0.00</span></p>
+  <button onclick="checkoutCart()">Finalizar compra</button>
+</div>
+
+<footer>
+  <p>© 2025 Tienda Online. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function updateCartCount() {
+    document.getElementById('cart-count').textContent = cart.reduce((acc, item) => acc + item.qty, 0);
+  }
+
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+  }
+
+  function addToCart(product, price) {
+    const existing = cart.find(p => p.name === product);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ name: product, price, qty: 1 });
+    }
+    saveCart();
+    showCart();
+  }
+
+  function showCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
+    cartItemsDiv.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.qty;
+      cartItemsDiv.innerHTML += `<p>${item.name} x ${item.qty} = $${(item.price * item.qty).toFixed(2)}</p>`;
+    });
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+    document.getElementById('cart-modal').style.display = 'block';
+  }
+
+  function checkoutCart() {
+    alert('Gracias por tu compra. Te contactaremos por WhatsApp para finalizar el pedido.');
+    cart = [];
+    saveCart();
+    document.getElementById('cart-modal').style.display = 'none';
+  }
+
+  document.getElementById('cart-button').addEventListener('click', () => {
+    document.getElementById('cart-modal').style.display =
+      document.getElementById('cart-modal').style.display === 'block' ? 'none' : 'block';
+  });
+
+  updateCartCount();
+</script>
+
+</body>
+</html>
+
 </script>
 
 </body>
