@@ -4,6 +4,206 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tienda - CleanSwipe™ & Mini Proyector</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fc;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background:#1d3557; 
+      color:#fff; 
+      padding:15px; 
+      position:sticky; 
+      top:0; 
+      z-index:999; 
+      text-align:center; 
+      font-size:22px; 
+      font-weight:bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+      padding-top: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #1d3557;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .product-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .buy-button, .add-to-cart {
+      display: inline-block;
+      background-color: #457b9d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    .buy-button:hover, .add-to-cart:hover {
+      background-color: #365f7a;
+    }
+    #cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 9999;
+    }
+    #cart-count {
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      position: absolute;
+      top: -5px;
+      right: -5px;
+    }
+    #cart-container {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 320px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 9999;
+      padding: 15px;
+    }
+    #cart-items div {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    .quantity-controls button {
+      padding: 2px 6px;
+      margin: 0 4px;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: red;
+      cursor: pointer;
+    }
+    .checkout-btn {
+      background: green;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .checkout-btn:hover {
+      background: darkgreen;
+    }
+  </style>
+</head>
+<body>
+
+<div id="cart-icon">
+  <i class="fa fa-shopping-cart"></i>
+  <span id="cart-count">0</span>
+</div>
+<div id="cart-container">
+  <h3>🛒 Tu Carrito</h3>
+  <div id="cart-items"></div>
+  <p><strong>Total:</strong> $<span id="cart-total">0.00</span></p>
+  <button class="checkout-btn">Finalizar compra</button>
+</div>
+
+<script>
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
+  const cartCount = document.getElementById("cart-count");
+  const cartIcon = document.getElementById("cart-icon");
+  const cartContainer = document.getElementById("cart-container");
+  const cartItems = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
+
+  function updateCartDisplay() {
+    cartItems.innerHTML = "";
+    let total = 0;
+    let count = 0;
+    for (const id in cart) {
+      const item = cart[id];
+      total += item.price * item.qty;
+      count += item.qty;
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <strong>${item.name}</strong><br>
+        <span>$${item.price.toFixed(2)} x ${item.qty}</span>
+        <div class="quantity-controls">
+          <button onclick="changeQty('${id}', -1)">-</button>
+          <button onclick="changeQty('${id}', 1)">+</button>
+          <button class="remove-btn" onclick="removeFromCart('${id}')">✖</button>
+        </div>
+      `;
+      cartItems.appendChild(div);
+    }
+    cartCount.textContent = count;
+    cartTotal.textContent = total.toFixed(2);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  function addToCart(id, name, price) {
+    if (cart[id]) {
+      cart[id].qty++;
+    } else {
+      cart[id] = { name, price, qty: 1 };
+    }
+    updateCartDisplay();
+  }
+  function changeQty(id, delta) {
+    cart[id].qty += delta;
+    if (cart[id].qty <= 0) delete cart[id];
+    updateCartDisplay();
+  }
+  function removeFromCart(id) {
+    delete cart[id];
+    updateCartDisplay();
+  }
+  cartIcon.onclick = () => {
+    cartContainer.style.display = cartContainer.style.display === "block" ? "none" : "block";
+  };
+  updateCartDisplay();
+</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -241,69 +441,150 @@
 
 <header>
   Tienda Online - Confianza y Calidad
-  <span style="position: absolute; right: 20px; top: 15px; font-size: 18px; cursor: pointer;" onclick="toggleCart()">
-    🛒 <span id="cart-count" style="background:#e63946; color:white; border-radius:50%; padding:2px 8px; font-size:14px;">0</span>
-  </span>
 </header>
 
-<div id="cart-box" style="display:none; position:fixed; top:80px; right:20px; width:300px; background:white; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:999; padding:15px; font-size:14px;">
-  <h3 style="margin-top:0; color:#1d3557;">🛒 Tu Carrito</h3>
-  <ul id="cart-items" style="list-style:none; padding:0; margin:0 0 10px 0;"></ul>
-  <p>Total: $<span id="cart-total">0.00</span></p>
-  <button onclick="checkout()" style="width:100%; padding:10px; background:#457b9d; color:white; border:none; border-radius:8px; cursor:pointer;">Finalizar compra</button>
+<div class="container">
+  <h1>🛍️ Nuestra tienda</h1>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="cleanswipe.png" alt="CleanSwipe™" />
+      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
+      <p>
+        🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
+        ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
+        📦 Envío gratuito<br>💰 Reembolso garantizado
+      </p>
+      <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+    </div>
+
+    <div class="product-card">
+      <img src="mini-proyector.jpg" alt="Mini Proyector" />
+      <h2>✨ Mini Proyector portátil LED</h2>
+      <p>
+        🎥 Cine portátil HD para casa y oficina.<br><br>
+        ✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br><br>
+        📦 Envío rápido<br>💰 Garantía de satisfacción
+      </p>
+      <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
+    </div>
+  </div>
+
+  <section id="testimonials-section">
+    <h2>Opiniones de nuestros clientes</h2>
+    <div id="testimonial-list"></div>
+    <form id="testimonial-form">
+      <input type="text" id="testimonial-name" placeholder="Tu nombre" required />
+      <br />
+      <textarea id="testimonial-text" rows="3" placeholder="Tu opinión" required></textarea>
+      <br />
+      <button type="submit">Enviar opinión</button>
+    </form>
+  </section>
+
+  <div class="about">
+    <h2>¿Quiénes somos?</h2>
+    <p>Somos una tienda online que ofrece productos prácticos y garantizados.</p>
+    <p>Contáctanos directamente por WhatsApp:</p>
+    <a class="whatsapp-button" href="https://wa.me/34642699620" target="_blank">💬 Escribir por WhatsApp</a>
+  </div>
 </div>
 
-<!-- El resto del HTML y JS queda sin modificar -->
+<footer>
+  <p>© 2025 Tienda Online. Todos los derechos reservados.</p>
+  <div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/SSL_icon.svg/32px-SSL_icon.svg.png" alt="SSL Seguro" title="Conexión segura" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Verified_Badge.svg/32px-Verified_Badge.svg.png" alt="Verificado" title="Pago verificado" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Check_mark_23x20_02.svg/32px-Check_mark_23x20_02.svg.png" alt="Satisfacción Garantizada" title="Satisfacción garantizada" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" title="Pagos con PayPal" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" title="Pagos con Visa" />
+  </div>
+</footer>
+
+<!-- Botón y caja de chat -->
+<button id="chat-toggle" title="Abrir chat">💬</button>
+<div id="chat-box">
+  <div id="chat-header">Chat en vivo</div>
+  <div id="chat-messages"></div>
+  <div id="chat-input">
+    <input type="text" id="chat-text" placeholder="Escribe un mensaje..." />
+    <button id="chat-send">Enviar</button>
+  </div>
+</div>
+
 <script>
-// Carrito simple
-let cart = [];
+  // Testimonios
+  const testimonialForm = document.getElementById('testimonial-form');
+  const testimonialList = document.getElementById('testimonial-list');
 
-function addToCart(productName, price) {
-  cart.push({ name: productName, price: price });
-  updateCart();
-}
-
-function updateCart() {
-  const cartItems = document.getElementById("cart-items");
-  const cartCount = document.getElementById("cart-count");
-  const cartTotal = document.getElementById("cart-total");
-
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    total += item.price;
-    const li = document.createElement("li");
-    li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeItem(${index})" style="float:right; background:none; border:none; color:red; cursor:pointer;">✖</button>`;
-    cartItems.appendChild(li);
-  });
-
-  cartCount.textContent = cart.length;
-  cartTotal.textContent = total.toFixed(2);
-}
-
-function toggleCart() {
-  const box = document.getElementById("cart-box");
-  box.style.display = box.style.display === "none" ? "block" : "none";
-}
-
-function removeItem(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
-
-function checkout() {
-  if (cart.length === 0) {
-    alert("Tu carrito está vacío.");
-    return;
+  function loadTestimonials() {
+    const stored = localStorage.getItem('testimonials');
+    if (stored) {
+      const arr = JSON.parse(stored);
+      testimonialList.innerHTML = '';
+      arr.forEach(t => {
+        const div = document.createElement('div');
+        div.classList.add('testimonial');
+        div.innerHTML = '<p>"' + escapeHTML(t.text) + '"</p><span>– ' + escapeHTML(t.name) + '</span>';
+        testimonialList.appendChild(div);
+      });
+    } else {
+      testimonialList.innerHTML = '<p style="text-align:center; color:#777;">No hay opiniones aún. ¡Sé el primero!</p>';
+    }
   }
+  function saveTestimonials(arr) {
+    localStorage.setItem('testimonials', JSON.stringify(arr));
+  }
+  testimonialForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = testimonialForm.querySelector('#testimonial-text').value.trim();
+    const name = testimonialForm.querySelector('#testimonial-name').value.trim();
+    if (!text || !name) return alert('Por favor, completa ambos campos.');
+    let arr = localStorage.getItem('testimonials');
+    arr = arr ? JSON.parse(arr) : [];
+    arr.unshift({ name, text });
+    if (arr.length > 20) arr.pop();
+    saveTestimonials(arr);
+    testimonialForm.reset();
+    loadTestimonials();
+  });
+  function escapeHTML(text) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(text));
+    return div.innerHTML;
+  }
+  loadTestimonials();
 
-  let summary = cart.map(item => `${item.name} - $${item.price.toFixed(2)}`).join("\n");
-  alert("Resumen de compra:\n" + summary + "\n\nTotal: $" + cart.reduce((sum, item) => sum + item.price, 0).toFixed(2) + "\n\nDirigiéndote a la pasarela de pago...");
+  // Chat básico
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatBox = document.getElementById('chat-box');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatText = document.getElementById('chat-text');
+  const chatSend = document.getElementById('chat-send');
 
-  // Redirigir a tu pasarela de pago principal (ejemplo: CleanSwipe)
-  window.open("https://payhip.com/b/UKlkB", "_blank");
-}
+  chatToggle.addEventListener('click', () => {
+    chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+  });
+  chatSend.addEventListener('click', sendMessage);
+  chatText.addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendMessage();
+  });
+  function sendMessage() {
+    const msg = chatText.value.trim();
+    if (!msg) return;
+    appendMessage('Tú', msg);
+    chatText.value = '';
+    setTimeout(() => {
+      appendMessage('Soporte', 'Gracias por tu mensaje. Te responderemos pronto.');
+    }, 1000);
+  }
+  function appendMessage(who, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.innerHTML = <strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)};
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 </script>
+
 </body>
 </html>
