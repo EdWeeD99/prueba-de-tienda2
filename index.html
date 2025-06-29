@@ -249,19 +249,18 @@
   color: #e63946;
 }
 .precio {
-  margin: 10px 0;
   font-size: 18px;
+  margin: 10px 0;
 }
 .precio-original {
   text-decoration: line-through;
-  color: #999;
+  color: #888;
   margin-right: 10px;
 }
 .precio-descuento {
   color: #e63946;
   font-weight: bold;
 }
-
 
   </style>
 </head>
@@ -280,22 +279,19 @@
 
   <div class="product-grid">
     <div class="product-card">
-      <img src="cleanswipe.png" alt="CleanSwipe™" />
-      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
-      <p>
-        🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
-        ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
-        📦 Envío gratuito<br>💰 Reembolso garantizado
-      </p>
-      <div class="stars" data-rating="4">★★★★☆</div>
+  <img src="cleanswipe.png" alt="CleanSwipe™" />
+  <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
+  <p>
+    🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
+    ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
+    📦 Envío gratuito<br>💰 Reembolso garantizado
+  </p>
+<div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="7"><span class="stock-text"></span></div>
+  <div class="precio" data-precio-descuento="8.99"></div>
+  <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar</a>
+</div>
 
-<div class="precio">
-  <span class="precio-original">$11.24</span>
-  <span class="precio-descuento">$8.99</span>
-</div>
-<a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar con 20% dto</a>
-</div>
 
     <div class="product-card">
       <img src="mini-proyector.jpg" alt="Mini Proyector" />
@@ -308,15 +304,10 @@
         
 <div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="7"><span class="stock-text"></span></div>
-     <div class="precio">
-  <span class="precio-original">$37.49</span>
-  <span class="precio-descuento">$29.99</span>
-</div>
-<a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar con 20% dto</a>
-
-    </div>
-  </div>
-
+  <div class="precio" data-precio-descuento="29.99"></div>
+  <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar</a>
+</div>   
+  
   <section id="testimonials-section">
     <h2>Opiniones de nuestros clientes</h2>
     <div id="testimonial-list"></div>
@@ -483,24 +474,21 @@
   });
 </script>
 <script>
+  // Calcular y mostrar el descuento del 20%
+  document.querySelectorAll('.precio').forEach(div => {
+    const precioConDescuento = parseFloat(div.dataset.precioDescuento);
+    const precioOriginal = (precioConDescuento / 0.8).toFixed(2);
+    div.innerHTML = `
+      <span class="precio-original">$${precioOriginal}</span>
+      <span class="precio-descuento">$${precioConDescuento.toFixed(2)}</span>
+    `;
+  });
+
+  // Cambiar texto del botón de compra para mostrar que hay oferta
   document.querySelectorAll('.buy-button').forEach(btn => {
-    const parent = btn.parentElement;
-    const precioTexto = btn.textContent.match(/\$([\d.]+)/);
-    if (precioTexto) {
-      const precio = parseFloat(precioTexto[1]);
-      const precioOriginal = (precio / 0.8).toFixed(2);
-      const precioDiv = document.createElement('div');
-      precioDiv.className = 'precio';
-      precioDiv.innerHTML = `
-        <span class="precio-original">$${precioOriginal}</span>
-        <span class="precio-descuento">$${precio.toFixed(2)}</span>
-      `;
-      parent.insertBefore(precioDiv, btn);
-      btn.textContent = 'Comprar con 20% dto';
-    }
+    btn.textContent = 'Comprar con 20% dto';
   });
 </script>
-
 
 </body>
 </html>
