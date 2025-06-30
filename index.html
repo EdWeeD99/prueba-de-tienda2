@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda - CleanSwipe™ & Mini Proyector</title>
+  <title>Tienda - CleanSwipe™ & Anillo de Luz LED</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -102,21 +102,13 @@
       margin-bottom: 15px;
     }
     #testimonial-list {
-  max-height: 200px;
-  overflow-y: auto;
-  flex-shrink: 1;
-  min-height: 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;        
-  box-sizing: border-box; 
-}
-
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
     .testimonial {
       border-bottom: 1px solid #ccc;
       padding: 10px 0;
@@ -243,33 +235,6 @@
     #chat-input button:hover {
       background: #365f7a;
     }
-      .stars {
-  font-size: 20px;
-  color: gold;
-  margin: 5px 0;
-}
-.stock {
-  font-size: 14px;
-  color: #1d3557;
-  font-weight: bold;
-}
-.stock.low {
-  color: #e63946;
-}
-.precio {
-  font-size: 18px;
-  margin: 10px 0;
-}
-.precio-original {
-  text-decoration: line-through;
-  color: #888;
-  margin-right: 10px;
-}
-.precio-descuento {
-  color: #e63946;
-  font-weight: bold;
-}
-
   </style>
 </head>
 <body>
@@ -278,56 +243,67 @@
   Tienda Online - Confianza y Calidad
 </header>
 
-<div id="oferta-timer" style="background:#e63946; color:white; text-align:center; padding:12px; font-size:18px; font-weight:bold;">
-  🕒 ¡Oferta especial disponible por tiempo limitado! Termina en <span id="cuenta-regresiva"></span>
-</div>
-
 <div class="container">
-  <h1>🍭 Nuestra tienda</h1>
+  <h1>🛍️ Nuestra tienda</h1>
 
   <div class="product-grid">
     <div class="product-card">
-  <img src="cleanswipe.png" alt="CleanSwipe™" />
-  <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
-  <p>
-    🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
-    ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
-    📦 Envío gratuito<br>💰 Reembolso garantizado
-  </p>
-<div class="stars" data-rating="4">★★★★☆</div>
-<div class="stock" data-stock="7"><span class="stock-text"></span></div>
-  <div class="precio" data-precio-descuento="8.99"></div>
-  <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar</a>
-</div>
-
+      <img src="cleanswipe.png" alt="CleanSwipe™" />
+      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
+      <p>
+        🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
+        ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
+        📦 Envío gratuito<br>💰 Reembolso garantizado
+      </p>
+      <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+    </div>
 
     <div class="product-card">
-      <img src="mini-proyector.jpg" alt="Mini Proyector" />
-      <h2>✨ Mini Proyector portátil LED</h2>
+      <img src="anillo de luz led.jpg" alt="anillo de luz led" />
+      <h2>✨Anillo de Luz LED portátil </h2>
       <p>
-        🎥 Cine portátil HD para casa y oficina.<br><br>
         ✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br><br>
         📦 Envío rápido<br>💰 Garantía de satisfacción
       </p>
-        
-<div class="stars" data-rating="4">★★★★☆</div>
-<div class="stock" data-stock="7"><span class="stock-text"></span></div>
-  <div class="precio" data-precio-descuento="29.99"></div>
-  <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar</a>
- </div>   
-</div> 
-<section id="testimonials-section">
-  <h2>Opiniones de nuestros clientes</h2>
-  <div id="testimonial-list"></div>
-  <form id="testimonial-form">
-    <input type="text" id="testimonial-name" placeholder="Tu nombre" required />
-    <br />
-    <textarea id="testimonial-text" rows="3" placeholder="Tu opinión" required></textarea>
-    <br />
-    <button type="submit">Enviar opinión</button>
-  </form>
-</section>
+      <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
+    </div>
+    <div class="product-card">
+  <div style="overflow:hidden; border-radius:10px; position:relative;">
+    <div id="carrusel-imagenes" style="display:flex; transition:0.5s; width:800%;">
+      <img src="lampara1.jpg" style="width:100%;" />
+      <img src="lampara2.jpg" style="width:100%;" />
+      <img src="lampara3.jpg" style="width:100%;" />
+      <img src="lampara4.jpg" style="width:100%;" />
+      <img src="lampara5.jpg" style="width:100%;" />
+      <img src="lampara6.jpg" style="width:100%;" />
+      <img src="lampara7.jpg" style="width:100%;" />
+      <img src="lampara8.jpg" style="width:100%;" />
+    </div>
+    <button onclick="moverCarrusel(-1)" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);background:#1d3557;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;">❮</button>
+    <button onclick="moverCarrusel(1)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);background:#1d3557;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;">❯</button>
+  </div>
+  <h2>🌈 Lámpara LED Mágica</h2>
+  <p>
+    💡 Ilumina tu espacio con estilo y personalidad.<br><br>
+    ✔️ 8 efectos de color<br>✔️ Recargable por USB<br>✔️ Diseño moderno<br><br>
+    📦 Envío gratuito<br>💰 Satisfacción garantizada
+  </p>
+  <a class="buy-button" href="https://payhip.com/b/q0Pw1" target="_blank">Comprar por 29,99€</a>
+</div>
 
+  </div>
+
+  <section id="testimonials-section">
+    <h2>Opiniones de nuestros clientes</h2>
+    <div id="testimonial-list"></div>
+    <form id="testimonial-form">
+      <input type="text" id="testimonial-name" placeholder="Tu nombre" required />
+      <br />
+      <textarea id="testimonial-text" rows="3" placeholder="Tu opinión" required></textarea>
+      <br />
+      <button type="submit">Enviar opinión</button>
+    </form>
+  </section>
 
   <div class="about">
     <h2>¿Quiénes somos?</h2>
@@ -432,156 +408,20 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 </script>
-
-</body>
 <script>
-  // Testimonios
-  const testimonialForm = document.getElementById('testimonial-form');
-  const testimonialList = document.getElementById('testimonial-list');
+  let index = 0;
+  const carrusel = document.getElementById('carrusel-imagenes');
+  const total = carrusel.children.length;
 
-  function escapeHTML(text) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(text));
-    return div.innerHTML;
+  function moverCarrusel(direccion) {
+    index += direccion;
+    if (index < 0) index = total - 1;
+    if (index >= total) index = 0;
+    carrusel.style.transform = `translateX(-${index * 100}%)`;
   }
 
-  function loadTestimonials() {
-    const stored = localStorage.getItem('testimonials');
-    if (stored) {
-      const arr = JSON.parse(stored);
-      testimonialList.innerHTML = '';
-      arr.forEach(t => {
-        const div = document.createElement('div');
-        div.classList.add('testimonial');
-        div.innerHTML = '<p>"' + escapeHTML(t.text) + '"</p><span>– ' + escapeHTML(t.name) + '</span>';
-        testimonialList.appendChild(div);
-      });
-    } else {
-      testimonialList.innerHTML = '<p style="text-align:center; color:#777;">No hay opiniones aún. ¡Sé el primero!</p>';
-    }
-  }
-
-  function saveTestimonials(arr) {
-    localStorage.setItem('testimonials', JSON.stringify(arr));
-  }
-
-  testimonialForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const text = testimonialForm.querySelector('#comment').value.trim();
-    const name = testimonialForm.querySelector('#name').value.trim();
-    if (!text || !name) return alert('Por favor, completa ambos campos.');
-    let arr = localStorage.getItem('testimonials');
-    arr = arr ? JSON.parse(arr) : [];
-    arr.unshift({ name, text });
-    if (arr.length > 20) arr.pop();
-    saveTestimonials(arr);
-    testimonialForm.reset();
-    loadTestimonials();
-  });
-
-  loadTestimonials();
-
-  // Chat básico
-  const chatToggle = document.getElementById('chat-toggle');
-  const chatBox = document.getElementById('chat-box');
-  const chatMessages = document.getElementById('chat-messages');
-  const chatInput = document.getElementById('chat-input');
-  const chatForm = document.getElementById('chat-form');
-
-  chatToggle.addEventListener('click', () => {
-    chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
-    if (chatBox.style.display === 'flex') chatInput.focus();
-  });
-
-  chatForm.addEventListener('submit', e => {
-    e.preventDefault();
-    sendMessage();
-  });
-
-  chatInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
-
-  function sendMessage() {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
-    appendMessage('Tú', msg);
-    chatInput.value = '';
-    setTimeout(() => {
-      appendMessage('Soporte', 'Gracias por tu mensaje. Te responderemos pronto.');
-    }, 1000);
-  }
-
-  function appendMessage(who, text) {
-    const msgDiv = document.createElement('div');
-    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
-    chatMessages.appendChild(msgDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  // Temporizador oferta 48h guardado en localStorage
-  const ahora = new Date().getTime();
-  let finOferta = localStorage.getItem("finOferta48h");
-  if (!finOferta) {
-    finOferta = ahora + 48 * 60 * 60 * 1000;
-    localStorage.setItem("finOferta48h", finOferta);
-  } else {
-    finOferta = parseInt(finOferta, 10);
-  }
-
-  const intervalo = setInterval(function () {
-    const ahora = new Date().getTime();
-    const diferencia = finOferta - ahora;
-
-    if (diferencia <= 0) {
-      clearInterval(intervalo);
-      document.getElementById("cuenta-regresiva").textContent = "⏰ La oferta ha terminado.";
-    } else {
-      const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
-      document.getElementById("cuenta-regresiva").textContent =
-        `${horas}h ${minutos}m ${segundos}s`;
-    }
-  }, 1000);
-
-  // Sistema de estrellas y stock dinámico
-  document.querySelectorAll('.stars').forEach(starEl => {
-    const rating = parseInt(starEl.dataset.rating, 10);
-    let starsHTML = '';
-    for (let i = 1; i <= 5; i++) {
-      starsHTML += i <= rating ? '★' : '☆';
-    }
-    starEl.textContent = starsHTML;
-  });
-
-  document.querySelectorAll('.stock').forEach(stockEl => {
-    const stock = parseInt(stockEl.dataset.stock, 10);
-    const textEl = stockEl.querySelector('.stock-text');
-    if (stock <= 3) {
-      stockEl.classList.add('low');
-      textEl.textContent = `¡Quedan solo ${stock} en stock! 🚨`;
-    } else {
-      textEl.textContent = `Disponibles: ${stock} unidades`;
-    }
-  });
-
-  // Calcular y mostrar el descuento del 20%
-  document.querySelectorAll('.precio').forEach(div => {
-    const precioConDescuento = parseFloat(div.dataset.precioDescuento);
-    const precioOriginal = (precioConDescuento / 0.8).toFixed(2);
-    div.innerHTML = 
-      `<span class="precio-original">$${precioOriginal}</span>
-       <span class="precio-descuento">$${precioConDescuento.toFixed(2)}</span>`;
-  });
-
-  // Cambiar texto del botón de compra para mostrar que hay oferta
-  document.querySelectorAll('.buy-button').forEach(btn => {
-    btn.textContent = 'Comprar con 20% dto';
-  });
+  // Autoplay: cambia de imagen cada 5 segundos
+  setInterval(() => moverCarrusel(1), 5000);
 </script>
 
 </body>
