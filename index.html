@@ -585,6 +585,31 @@
     carrusel.style.transform = `translateX(-${ancho * indice}px)`;
   }, 5000);
 </script>
+ <script>
+  let indice = 0;
+  const total = 8; // número de imágenes
+  const carrusel = document.getElementById('carrusel-imagenes');
+
+  function actualizarCarrusel() {
+    carrusel.style.transform = `translateX(-${indice * 300}px)`;
+  }
+
+  document.getElementById('anterior').addEventListener('click', () => {
+    indice = (indice - 1 + total) % total;
+    actualizarCarrusel();
+  });
+
+  document.getElementById('siguiente').addEventListener('click', () => {
+    indice = (indice + 1) % total;
+    actualizarCarrusel();
+  });
+
+  // Avance automático cada 5 segundos
+  setInterval(() => {
+    indice = (indice + 1) % total;
+    actualizarCarrusel();
+  }, 5000);
+</script>
 
 </body>
 </html>
