@@ -288,38 +288,42 @@
     }
   </style>
 
-  .descripcion ul {
-    list-style: none;
-    padding: 0;
-    font-size: 1.1rem;
-    color: #444;
-  }
+    </style>
 
-  .precio {
-    font-size: 1.8rem;
-    color: #27ae60;
-    font-weight: bold;
-    margin-top: 1rem;
-  }
+  <style>
+    .descripcion ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1.1rem;
+      color: #444;
+    }
 
-  .boton-comprar {
-    margin-top: 1rem;
-    background-color: #6c63ff;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-    text-decoration: none;
-    display: inline-block;
-  }
+    .precio {
+      font-size: 1.8rem;
+      color: #27ae60;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
 
-  .boton-comprar:hover {
-    background-color: #574fd6;
-  }
-</style>
+    .boton-comprar {
+      margin-top: 1rem;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .boton-comprar:hover {
+      background-color: #574fd6;
+    }
+  </style>
+
 </head>
 <body>
 
@@ -559,5 +563,28 @@
     }
   });
 </script>
+ <script>
+  let indice = 0;
+  const carrusel = document.getElementById('carrusel-imagenes');
+  const total = 8; // número total de imágenes
+  const ancho = 300;
+
+  document.getElementById('anterior').addEventListener('click', () => {
+    indice = (indice - 1 + total) % total;
+    carrusel.style.transform = `translateX(-${ancho * indice}px)`;
+  });
+
+  document.getElementById('siguiente').addEventListener('click', () => {
+    indice = (indice + 1) % total;
+    carrusel.style.transform = `translateX(-${ancho * indice}px)`;
+  });
+
+  // Carrusel automático
+  setInterval(() => {
+    indice = (indice + 1) % total;
+    carrusel.style.transform = `translateX(-${ancho * indice}px)`;
+  }, 5000);
+</script>
+
 </body>
 </html>
