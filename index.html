@@ -319,6 +319,46 @@
     .boton-comprar:hover {
       background-color: #574fd6;
     }
+   .carrusel {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 20px auto;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.carrusel-imagenes {
+  display: flex;
+  width: max-content;
+  transition: transform 0.5s ease-in-out;
+}
+.carrusel-imagenes img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  flex-shrink: 0;
+}
+.anterior, .siguiente {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  user-select: none;
+}
+.anterior {
+  left: 10px;
+}
+.siguiente {
+  right: 10px;
+}
+
   </style>
 
 </head>
@@ -331,19 +371,42 @@
 <div class="container">
   <h1>🛍️ Nuestra tienda</h1>
 
-  <div class="product-grid">
-    <div class="product-card">
-      <img src="cleanswipe.png" alt="CleanSwipe™" />
-      <h2>✨ CleanSwipe™ – Tu pantalla como nueva</h2>
-      <p>
-        🧽 Limpiador 2 en 1 con spray y paño integrado.<br><br>
-        ✔️ Reutilizable<br>✔️ Compacto<br>✔️ No raya<br><br>
-        📦 Envío gratuito<br>💰 Reembolso garantizado
-      </p>
-      <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+  <div class="product-card">
+  <div class="carrusel" data-carrusel>
+    <div class="carrusel-imagenes">
+      <img src="producto1_1.jpg" alt="Producto 1 Imagen 1" />
+      <img src="producto1_2.jpg" alt="Producto 1 Imagen 2" />
+      <img src="producto1_3.jpg" alt="Producto 1 Imagen 3" />
+      <img src="producto1_1.jpg" alt="Producto 1 Imagen 4" /> 
     </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="anterior">Anterior</button>
+      <button class="siguiente">Siguiente</button>
+    </div>
+  </div>
 
-    <div class="product-card">
+  <h2>🧽 CleanSwipe™ – Edición especial</h2>
+  <p>
+    ✔️ Más compacto<br>✔️ Recargable<br><br>
+    📦 Envío gratis<br>💰 100% Garantía
+  </p>
+  <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
+</div>
+
+
+     <div class="product-card">
+  <div class="carrusel" data-carrusel>
+    <div class="carrusel-imagenes">
+      <img src="producto1_1.jpg" alt="Producto 1 Imagen 1" />
+      <img src="producto1_2.jpg" alt="Producto 1 Imagen 2" />
+      <img src="producto1_3.jpg" alt="Producto 1 Imagen 3" />
+      <img src="producto1_1.jpg" alt="Producto 1 Imagen 4" /> 
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="anterior">Anterior</button>
+      <button class="siguiente">Siguiente</button>
+    </div>
+  </div>
       <img src="anillo de luz led.jpg" alt="anillo de luz led" />
       <h2>✨Anillo de Luz LED portátil </h2>
       <p>
@@ -353,8 +416,9 @@
       <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
     </div>
     <div class="product-card">
-  <div id="carrusel">
-  <div id="carrusel-imagenes">
+  <div class="product-card">
+  <div class="carrusel" data-carrusel>
+    <div class="carrusel-imagenes">
     <img src="lampara1.jpg" alt="Lámpara LED Mágica - imagen 1" />
     <img src="lampara2.jpg" alt="Lámpara LED Mágica - imagen 2" />
     <img src="lampara3.jpg" alt="Lámpara LED Mágica - imagen 3" />
@@ -364,8 +428,8 @@
     <img src="lampara7.jpg" alt="Lámpara LED Mágica - imagen 7" />
   </div>
   <div style="text-align:center; margin-top:10px;">
-   <button id="anterior">Anterior</button>
-<button id="siguiente">Siguiente</button>
+    <button class="anterior">Anterior</button>
+      <button class="siguiente">Siguiente</button>
   </div>
 </div>
   <h2>🌈 Lámpara LED Mágica</h2>
@@ -632,6 +696,36 @@
     actualizarCarrusel();
   }, 5000);
 </script>
+ <script>
+  document.querySelectorAll('[data-carrusel]').forEach(carrusel => {
+    const imagenes = carrusel.querySelector('.carrusel-imagenes');
+    const btnAnterior = carrusel.querySelector('.anterior');
+    const btnSiguiente = carrusel.querySelector('.siguiente');
+    const total = imagenes.children.length;
+    let indice = 0;
+
+    btnAnterior.addEventListener('click', () => {
+      indice = (indice - 1 + total) % total;
+      actualizarCarrusel();
+    });
+
+    btnSiguiente.addEventListener('click', () => {
+      indice = (indice + 1) % total;
+      actualizarCarrusel();
+    });
+
+    function actualizarCarrusel() {
+      imagenes.style.transform = `translateX(-${indice * 300}px)`;
+    }
+
+    // Carrusel automático (opcional)
+    setInterval(() => {
+      indice = (indice + 1) % total;
+      actualizarCarrusel();
+    }, 5000);
+  });
+</script>
+
 
 </body>
 </html>
