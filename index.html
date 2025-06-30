@@ -725,6 +725,34 @@
     }, 5000);
   });
 </script>
+ <script>
+  document.querySelectorAll('.carrusel').forEach(carrusel => {
+    const imagenes = carrusel.querySelector('.carrusel-imagenes');
+    const total = imagenes.querySelectorAll('img').length;
+    let index = 0;
+
+    const actualizarCarrusel = () => {
+      imagenes.style.transform = `translateX(-${index * 300}px)`;
+    };
+
+    carrusel.querySelector('.anterior').addEventListener('click', () => {
+      index = (index - 1 + total) % total;
+      actualizarCarrusel();
+    });
+
+    carrusel.querySelector('.siguiente').addEventListener('click', () => {
+      index = (index + 1) % total;
+      actualizarCarrusel();
+    });
+
+    // Opcional: auto-avance cada 5 segundos
+    setInterval(() => {
+      index = (index + 1) % total;
+      actualizarCarrusel();
+    }, 5000);
+  });
+</script>
+
 
 
 </body>
