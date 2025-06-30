@@ -348,20 +348,23 @@
       <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
     </div>
     <div class="product-card">
-  <div style="overflow:hidden; border-radius:10px; position:relative;">
-    <div id="carrusel-imagenes" style="display:flex; transition:0.5s; width:800%;">
-      <img src="lampara1.jpg" style="width:100%;" />
-      <img src="lampara2.jpg" style="width:100%;" />
-      <img src="lampara3.jpg" style="width:100%;" />
-      <img src="lampara4.jpg" style="width:100%;" />
-      <img src="lampara5.jpg" style="width:100%;" />
-      <img src="lampara6.jpg" style="width:100%;" />
-      <img src="lampara7.jpg" style="width:100%;" />
-      <img src="lampara8.jpg" style="width:100%;" />
-    </div>
-    <button onclick="moverCarrusel(-1)" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);background:#1d3557;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;">❮</button>
-    <button onclick="moverCarrusel(1)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);background:#1d3557;color:white;border:none;border-radius:50%;width:35px;height:35px;cursor:pointer;">❯</button>
+  <div id="carrusel">
+  <div id="carrusel-imagenes">
+    <img src="lampara1.jpg" alt="Lámpara LED Mágica - imagen 1" />
+    <img src="lampara2.jpg" alt="Lámpara LED Mágica - imagen 2" />
+    <img src="lampara3.jpg" alt="Lámpara LED Mágica - imagen 3" />
+    <img src="lampara4.jpg" alt="Lámpara LED Mágica - imagen 4" />
+    <img src="lampara5.jpg" alt="Lámpara LED Mágica - imagen 5" />
+    <img src="lampara6.jpg" alt="Lámpara LED Mágica - imagen 6" />
+    <img src="lampara7.jpg" alt="Lámpara LED Mágica - imagen 7" />
+    <img src="lampara8.jpg" alt="Lámpara LED Mágica - imagen 8" />
   </div>
+  <div style="text-align:center; margin-top:10px;">
+    <a class="boton" id="anterior">Anterior</a>
+    <a class="boton" id="siguiente">Siguiente</a>
+  </div>
+  <a class="buy-button" href="https://payhip.com/b/q0Pw1" target="_blank" rel="noopener noreferrer">Comprar por 29,99€</a>
+</div>
   <h2>🌈 Lámpara LED Mágica</h2>
   <p>
     💡 Ilumina tu espacio con estilo y personalidad.<br><br>
@@ -483,26 +486,75 @@
   }
   function appendMessage(who, text) {
     const msgDiv = document.createElement('div');
-    msgDiv.innerHTML = <strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)};
+    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 </script>
 <script>
-  let index = 0;
-  const carrusel = document.getElementById('carrusel-imagenes');
-  const total = carrusel.children.length;
+  // Carrusel
+  const carruselImagenes = document.getElementById('carrusel-imagenes');
+  const totalImagenes = 8;
+  let posicion = 0;
 
-  function moverCarrusel(direccion) {
-    index += direccion;
-    if (index < 0) index = total - 1;
-    if (index >= total) index = 0;
-    carrusel.style.transform = `translateX(-${index * 100}%)`;
+  function mostrarImagen(pos) {
+    // El desplazamiento es % según la imagen (cada imagen 12.5% ancho)
+    carruselImagenes.style.transform = `translateX(-${pos * 12.5}%)`;
   }
 
-  // Autoplay: cambia de imagen cada 5 segundos
-  setInterval(() => moverCarrusel(1), 5000);
-</script>
+  document.getElementById('siguiente').addEventListener('click', () => {
+    posicion = (posicion + 1) % totalImagenes;
+    mostrarImagen(posicion);
+  });
 
+  document.getElementById('anterior').addEventListener('click', () => {
+    posicion = (posicion - 1 + totalImagenes) % totalImagenes;
+    mostrarImagen(posicion);
+  });
+
+  // Avance automático cada 5 segundos
+  setInterval(() => {
+    posicion = (posicion + 1) % totalImagenes;
+    mostrarImagen(posicion);
+  }, 5000);
+
+  // Chat simple
+  const chatMessages = document.getElementById('chat-messages');
+  const inputMensaje = document.getElementById('mensaje');
+  const btnEnviar = document.getElementById('enviar');
+
+  function escapeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function appendMessage(who, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.innerHTML = `<strong>${escapeHTML(who)}:</strong> ${escapeHTML(text)}`;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  btnEnviar.addEventListener('click', () => {
+    const texto = inputMensaje.value.trim();
+    if (texto === '') return;
+    appendMessage('Tú', texto);
+    inputMensaje.value = '';
+
+    // Respuesta automática ejemplo (puedes cambiarla)
+    setTimeout(() => {
+      appendMessage('Echo', 'Gracias por tu mensaje. En breve te responderemos.');
+    }, 1000);
+  });
+
+  // Enviar mensaje con tecla Enter
+  inputMensaje.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      btnEnviar.click();
+      e.preventDefault();
+    }
+  });
+</script>
 </body>
 </html>
