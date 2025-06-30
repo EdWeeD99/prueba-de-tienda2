@@ -610,6 +610,31 @@
     actualizarCarrusel();
   }, 5000);
 </script>
+ <script>
+  let index = 0;
+  const total = 8;
+  const carrusel = document.getElementById("carrusel-imagenes");
+
+  function actualizarCarrusel() {
+    carrusel.style.transform = `translateX(-${index * 300}px)`;
+  }
+
+  document.getElementById("anterior").addEventListener("click", () => {
+    index = (index - 1 + total) % total;
+    actualizarCarrusel();
+  });
+
+  document.getElementById("siguiente").addEventListener("click", () => {
+    index = (index + 1) % total;
+    actualizarCarrusel();
+  });
+
+  // Auto avance cada 5 segundos
+  setInterval(() => {
+    index = (index + 1) % total;
+    actualizarCarrusel();
+  }, 5000);
+</script>
 
 </body>
 </html>
