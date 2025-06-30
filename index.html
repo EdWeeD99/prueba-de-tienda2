@@ -358,6 +358,20 @@
 .siguiente {
   right: 10px;
 }
+.stars {
+  font-size: 20px;
+  color: gold;
+  margin: 5px 0;
+}
+   .stock {
+  font-size: 14px;
+  color: #1d3557;
+  font-weight: bold;
+}
+.stock.low {
+  color: #e63946;
+}
+
 
   </style>
 
@@ -393,6 +407,9 @@
     ✔️ Más compacto<br>✔️ Recargable<br><br>
     📦 Envío gratis<br>💰 100% Garantía
   </p>
+   <div class="stars" data-rating="4">★★★★☆</div>
+<div class="stock" data-stock="4"><span class="stock-text"></span></div>
+
   <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
   </div>
      <div class="product-card">
@@ -413,6 +430,9 @@
         ✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br><br>
         📦 Envío rápido<br>💰 Garantía de satisfacción
       </p>
+      <div class="stars" data-rating="4">★★★★☆</div>
+<div class="stock" data-stock="7"><span class="stock-text"></span></div>
+
       <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
     </div>
     <div class="product-card">
@@ -437,6 +457,9 @@
     ✔️ 8 efectos de color<br>✔️ Recargable por USB<br>✔️ Diseño moderno<br><br>
     📦 Envío gratuito<br>💰 Satisfacción garantizada
   </p>
+     <div class="stars" data-rating="4">★★★★☆</div>
+<div class="stock" data-stock="6"><span class="stock-text"></span></div>
+
   <a class="buy-button" href="https://payhip.com/b/q0Pw1" target="_blank">Comprar por 29,99€</a>
   </div>
 </div>
@@ -747,6 +770,32 @@
       index = (index + 1) % total;
       actualizarCarrusel();
     }, 5000);
+  });
+</script>
+<script>
+  // Sistema de estrellas (puntuación)
+  document.querySelectorAll('.stars').forEach(starEl => {
+    const rating = parseInt(starEl.dataset.rating, 10);
+    let starsHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      starsHTML += i <= rating ? '★' : '☆';
+    }
+    starEl.textContent = starsHTML;
+  });
+
+  // Stock dinámico
+  document.querySelectorAll('.stock').forEach(stockEl => {
+    const stock = parseInt(stockEl.dataset.stock, 10);
+    const textEl = stockEl.querySelector('.stock-text');
+    if (stock <= 3 && stock > 0) {
+      stockEl.classList.add('low');
+      textEl.textContent = `¡Solo quedan ${stock} en stock!`;
+    } else if (stock > 3) {
+      textEl.textContent = `En stock: ${stock}`;
+    } else {
+      textEl.textContent = 'Agotado';
+      stockEl.classList.add('low');
+    }
   });
 </script>
 
