@@ -385,6 +385,21 @@
     transform: translate(-50%, -50%) scale(1);
   }
 }
+   #carrito-fijo {
+  position: fixed;
+  top: 80px; /* desde arriba */
+  right: 20px; /* desde derecha */
+  width: 250px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
 </style>
 </head>
 <body>
@@ -454,7 +469,7 @@
         ✔️ HDMI / USB / TF<br>✔️ Ligero y recargable<br><br>
         📦 Envío rápido<br>💰 Garantía de satisfacción
       </p>
-      <div class="stars" data-rating="4">★★★★☆</div>
+      <div class="stars" data-rating="4,5">★★★★☆</div>
 <div class="stock" data-stock="7"><span class="stock-text"></span></div>
 <div style="margin-bottom:10px;">
     <button onclick="addToCart('Anillo de Luz LED portátil – Edición especial', 29.99)" style="padding:8px 16px; cursor:pointer;">
@@ -488,7 +503,7 @@
      <div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="6"><span class="stock-text"></span></div>
 <div style="margin-bottom:10px;">
-    <button onclick="addToCart(' Lámpara LED Mágica – Edición especial', 29.99)" style="padding:8px 16px; cursor:pointer;">
+    <button onclick="addToCart('Lámpara LED Mágica – Edición especial', 29.99)" style="padding:8px 16px; cursor:pointer;">
       Añadir al carrito
     </button>
   </div>
