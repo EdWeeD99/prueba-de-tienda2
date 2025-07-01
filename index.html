@@ -429,7 +429,11 @@
   </p>
    <div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="4"><span class="stock-text"></span></div>
-
+<div style="margin-bottom:10px;">
+    <button onclick="addToCart('CleanSwipe™ – Edición especial', 8.99)" style="padding:8px 16px; cursor:pointer;">
+      Añadir al carrito
+    </button>
+  </div>
   <a class="buy-button" href="https://payhip.com/b/UKlkB" target="_blank">Comprar por $8.99</a>
   </div>
      <div class="product-card">
@@ -452,7 +456,11 @@
       </p>
       <div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="7"><span class="stock-text"></span></div>
-
+<div style="margin-bottom:10px;">
+    <button onclick="addToCart('Anillo de Luz LED portátil – Edición especial', 29.99)" style="padding:8px 16px; cursor:pointer;">
+      Añadir al carrito
+    </button>
+  </div>
       <a class="buy-button" href="https://payhip.com/b/wYcd3" target="_blank">Comprar por $29.99</a>
     </div>
     <div class="product-card">
@@ -479,10 +487,23 @@
   </p>
      <div class="stars" data-rating="4">★★★★☆</div>
 <div class="stock" data-stock="6"><span class="stock-text"></span></div>
-
+<div style="margin-bottom:10px;">
+    <button onclick="addToCart(' Lámpara LED Mágica – Edición especial', 29.99)" style="padding:8px 16px; cursor:pointer;">
+      Añadir al carrito
+    </button>
+  </div>
   <a class="buy-button" href="https://payhip.com/b/q0Pw1" target="_blank">Comprar por 29,99€</a>
   </div>
 </div>
+ <!-- Contenedor del carrito -->
+<section id="carrito-section" style="margin-top:40px; border: 2px solid #ccc; padding: 20px; max-width: 400px;">
+  <h2>🛒 Tu Carrito</h2>
+  <ul id="lista-carrito" style="list-style:none; padding-left:0;"></ul>
+  <p><strong>Total:</strong> $<span id="total">0</span></p>
+  <button onclick="vaciarCarrito()" style="margin-right:10px; padding:8px 16px;">Vaciar carrito</button>
+  <button onclick="checkout()" style="padding:8px 16px; background:#28a745; color:#fff; border:none; border-radius:5px;">Finalizar Compra</button>
+</section>
+
   <section id="testimonials-section">
     <h2>Opiniones de nuestros clientes</h2>
     <div id="testimonial-list"></div>
@@ -825,6 +846,53 @@
     }, 3000); // Aparece después de 3 segundos
   };
 </script>
+ <script>
+  let carrito = [];
+  let total = 0;
+
+  function addToCart(nombre, precio) {
+    carrito.push({ nombre, precio });
+    actualizarCarrito();
+  }
+
+  function actualizarCarrito() {
+    const lista = document.getElementById('lista-carrito');
+    lista.innerHTML = '';
+    total = 0;
+    carrito.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${item.nombre} - $${item.precio.toFixed(2)}`;
+      lista.appendChild(li);
+      total += item.precio;
+    });
+    document.getElementById('total').textContent = total.toFixed(2);
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }
+
+  function vaciarCarrito() {
+    carrito = [];
+    actualizarCarrito();
+    localStorage.removeItem('carrito');
+  }
+
+  function checkout() {
+    if(carrito.length === 0) {
+      alert('Tu carrito está vacío.');
+      return;
+    }
+    alert('Gracias por tu compra! Total: $' + total.toFixed(2));
+    vaciarCarrito();
+  }
+
+  window.onload = () => {
+    const carritoGuardado = JSON.parse(localStorage.getItem('carrito'));
+    if (carritoGuardado && carritoGuardado.length > 0) {
+      carrito = carritoGuardado;
+      actualizarCarrito();
+    }
+  }
+</script>
+
 
 
 
