@@ -384,62 +384,66 @@
   100% {
     transform: translate(-50%, -50%) scale(1);
   }
-#carrito-section {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: #28a745;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  color: white;
-  z-index: 999;
-  padding: 10px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
+<style>
+  #carrito-section {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    max-height: 60px;
+    background-color: #28a745;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    color: white;
+    z-index: 999;
+    padding: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: max-height 0.3s ease, width 0.3s ease, border-radius 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-#carrito-section::before {
-  content: "🛒";
-  font-size: 30px;
-  display: block;
-  text-align: center;
-  line-height: 40px;
-  transition: opacity 0.3s;
-}
+  #carrito-section::before {
+    content: "🛒";
+    font-size: 30px;
+    line-height: 40px;
+    transition: opacity 0.3s ease;
+    text-align: center;
+  }
 
-#carrito-section.activo {
-  width: 320px;
-  height: auto;
-  border-radius: 15px;
-  background-color: white;
-  color: black;
-  padding: 20px;
-}
+  #carrito-section.activo {
+    width: 320px;
+    max-height: 400px;
+    border-radius: 15px;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    overflow-y: auto;
+  }
 
-#carrito-section.activo::before {
-  content: "";
-}
+  #carrito-section.activo::before {
+    content: "";
+  }
 
-#carrito-section h2,
-#carrito-section ul,
-#carrito-section p,
-#carrito-section button {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
+  #carrito-section h2,
+  #carrito-section ul,
+  #carrito-section p,
+  #carrito-section button {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    margin: 5px 0;
+  }
 
-#carrito-section.activo h2,
-#carrito-section.activo ul,
-#carrito-section.activo p,
-#carrito-section.activo button {
-  opacity: 1;
-  pointer-events: auto;
-}
-
+  #carrito-section.activo h2,
+  #carrito-section.activo ul,
+  #carrito-section.activo p,
+  #carrito-section.activo button {
+    opacity: 1;
+    pointer-events: auto;
+  }
 </style>
 </head>
 <body>
