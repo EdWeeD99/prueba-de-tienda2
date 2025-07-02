@@ -960,15 +960,6 @@
 </script>
 <script>
   const carrito = document.getElementById("carrito-section");
-  carrito.addEventListener("click", function (e) {
-    // Evitar que haga clic en botones internos como "Vaciar"
-    if (e.target.tagName !== "BUTTON") {
-      carrito.classList.toggle("activo");
-    }
-  });
-</script>
-<script>
-  const carrito = document.getElementById("carrito-section");
 
   carrito.addEventListener("click", function (e) {
     // Si haces clic fuera de un botón, se activa la burbuja
