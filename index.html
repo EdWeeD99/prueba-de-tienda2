@@ -384,21 +384,33 @@
   100% {
     transform: translate(-50%, -50%) scale(1);
   }
-}
-   #carrito-fijo {
-  position: fixed;
-  top: 80px; /* desde arriba */
-  right: 20px; /* desde derecha */
-  width: 250px;
-  max-height: 400px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ccc;
-  padding: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-  font-family: Arial, sans-serif;
-}
+<style>
+  #carrito-section {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border: 2px solid #ccc;
+    padding: 20px;
+    background-color: white;
+    max-width: 300px;
+    z-index: 999;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+
+  /* Diseño adaptado para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) {
+    #carrito-section {
+      position: static;
+      max-width: 100%;
+      margin: 20px auto;
+      box-shadow: none;
+      border-radius: 0;
+      border: 1px solid #ccc;
+    }
+  }
+</style>
+
 
 </style>
 </head>
@@ -511,7 +523,18 @@
   </div>
 </div>
  <!-- Contenedor del carrito -->
-<section id="carrito-section" style="margin-top:40px; border: 2px solid #ccc; padding: 20px; max-width: 400px;">
+<section id="carrito-section" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  background-color: white;
+  max-width: 300px;
+  z-index: 999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+">
   <h2>🛒 Tu Carrito</h2>
   <ul id="lista-carrito" style="list-style:none; padding-left:0;"></ul>
   <p><strong>Total:</strong> $<span id="total">0</span></p>
